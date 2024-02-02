@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 		List<Driver> drivers = driverRepository2.findAll();
 		Driver driver = null;
 		for(Driver d : drivers){
-			if(d.getCab().isAvailable()){
+			if(d.getCab().getAvailable()){
 				if((driver == null) || (d.getDriverId()  < driver.getDriverId())){
 					driver = d;
 				}
@@ -60,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 		TripBooking newTripBooked = new TripBooking(fromLocation,toLocation,distanceInKm);
 		newTripBooked.setCustomer(customerRepository2.findById(customerId).get());
-		newTripBooked.setTripStatus(TripStatus.CONFIRMED);
+		newTripBooked.setStatus(TripStatus.CONFIRMED);
 		newTripBooked.setDriver(driver);
 		int rate = driver.getCab().getPerKmRate();
 		newTripBooked.setBill(distanceInKm*rate);
@@ -81,7 +81,7 @@ public class CustomerServiceImpl implements CustomerService {
 		//Cancel the trip having given trip Id and update TripBooking attributes accordingly
 
 		TripBooking bookedTrip = tripBookingRepository2.findById(tripId).get();
-		bookedTrip.setTripStatus(TripStatus.CANCELED);
+		bookedTrip.setStatus(TripStatus.CANCELED);
 		bookedTrip.setBill(0); //Bill amount set to zero after cancel
 		bookedTrip.getDriver().getCab().setAvailable(true);
 		tripBookingRepository2.save(bookedTrip);
@@ -92,7 +92,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public void completeTrip(Integer tripId){
 		//Complete the trip having given trip Id and update TripBooking attributes accordingly
 		TripBooking bookedTrip = tripBookingRepository2.findById(tripId).get();
-		bookedTrip.setTripStatus(TripStatus.COMPLETED);
+		bookedTrip.setStatus(TripStatus.COMPLETED);
 		bookedTrip.getDriver().getCab().setAvailable(true);
 		tripBookingRepository2.save(bookedTrip);
 
