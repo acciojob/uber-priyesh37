@@ -13,6 +13,7 @@ public class DriverController {
 	
 	@PostMapping(value = "/register")
 	public ResponseEntity<Void> registerDriver(@RequestParam String mobile, @RequestParam String password){
+
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
