@@ -25,6 +25,9 @@ public class Driver {
         this.password = password;
     }
 
+    public Driver() {
+    }
+
     public int getDriverId() {
         return driverId;
     }

@@ -104,4 +104,7 @@ public class TripBooking {
         this.toLocation = toLocation;
         this.distanceInKm = distanceInKm;
     }
+
+    public TripBooking() {
+    }
 }
